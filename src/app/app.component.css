@@ -55,3 +55,9 @@ button:hover {
   margin-right: .8em;
   border-radius: 4px 0 0 4px;
 }
+
+video {
+ border: dashed;
+  border-color: #336699;
+  border-radius: 1em;
+}

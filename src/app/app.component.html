@@ -6,8 +6,11 @@
   </div>
 </ng-template>
 
+<video #myvideo><</video>
 <div *ngIf="connectedWithSomeone; else connectedWithNoone">
   <h2> I'm connected with {{connectedPeople}}</h2>
+
+  <button (click)="videoCall()">Start Video Chat</button>
 </div>
 
 <div>
