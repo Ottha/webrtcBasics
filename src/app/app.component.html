@@ -1,1 +1,15 @@
-<h1>My id - {{mypeerid}}</h1>
+<h1>My id - {{myPeerId}}</h1>
+
+<ng-template #connectedWithNoone>
+  <div>
+    <h2>I AM SOOO ALONE </h2>
+  </div>
+</ng-template>
+
+<div *ngIf="connectedWithSomeone; else connectedWithNoone">
+  <h2> I'm connected with {{connectedPeople}}</h2>
+</div>
+
+
+<input type="text" [(ngModel)]="someonesId">
+<button (click)="connect()">Connect</button>
