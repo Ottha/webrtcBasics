@@ -10,6 +10,21 @@
   <h2> I'm connected with {{connectedPeople}}</h2>
 </div>
 
+<div>
+  <label>Connect with someone:</label>
+  <input type="text" [(ngModel)]="someonesId">
+  <button (click)="connect()">Connect</button>
+</div>
 
-<input type="text" [(ngModel)]="someonesId">
-<button (click)="connect()">Connect</button>
+<h2 *ngIf="messages.length > 0">Messages:</h2>
+<ul class="messages">
+  <li *ngFor="let message of messages"><span class="badge">{{message.timestamp}}</span>
+    <b>{{message.sender}}: </b> {{message.message}}
+  </li>
+</ul>
+
+<div>
+  <label>Send a message:</label>
+  <input type="text" [(ngModel)]="messageText">
+  <button (click)="sendMessage()">Send message</button>
+</div>

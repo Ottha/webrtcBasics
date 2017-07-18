@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Message} from "./Message";
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,11 @@ import {Component, Input, OnInit} from '@angular/core';
 export class AppComponent implements OnInit {
   myPeerId: String;
   @Input() someonesId: String;
+  conn;
   connectedWithSomeone: Boolean = false;
   connectedPeople: Array<String> = [];
+  messageText: String;
+  messages: Array<Message> = [];
   peer;
 
   ngOnInit() {
@@ -18,13 +22,25 @@ export class AppComponent implements OnInit {
       this.myPeerId = id;
       console.log('Your connection is now open with  peerId: ' + id);
     });
+    this.peer.on('connection', (conn) => {
+      conn.on('data', (data) => {
+        console.log(data);
+        const message: Message = JSON.parse(data);
+        console.log(message);
+        this.messages.push(message);
+      });
+    });
   }
 
   connect() {
-    const conn = this.peer.connect(this.someonesId);
-    conn.on('open', () => {
+    this.conn = this.peer.connect(this.someonesId);
+    this.conn.on('open', () => {
       this.connectedWithSomeone = true;
       this.connectedPeople.push(this.someonesId);
     });
+  }
+  sendMessage() {
+    const message = new Message(Date.now(), this.myPeerId, this.messageText  )
+    this.conn.send(JSON.stringify(message));
   }
 }
